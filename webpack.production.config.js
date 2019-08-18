@@ -4,9 +4,11 @@ const webpack = require('webpack');
 const HappyPack = require('happypack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const node_modules_dir = path.resolve(__dirname, 'node_modules');
 
@@ -54,7 +56,7 @@ module.exports = {
             use: ExtractTextPlugin.extract({
                 fallback: 'vue-style-loader',
                 use: 'happypack/loader?id=css'
-              })
+            })
         }, {
             test: /\.jpe?g$|\.gif$|\.png$|\.mp3$/,
             exclude: node_modules_dir,
@@ -63,6 +65,31 @@ module.exports = {
     },
     optimization: {
         minimize: true,
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                uglifyOptions: {
+                    output: {
+                        comments: false,
+                        beautify: false
+                    }
+                }
+            }),
+            new OptimizeCssAssetsPlugin({
+                assetNameRegExp: /\.(sa|sc|c)ss$/g,
+                cssProcessor: require('cssnano'),
+                cssProcessorPluginOptions: {
+                    preset: ['default', {
+                        discardComments: {
+                            removeAll: true
+                        },
+                        normalizeUnicode: false
+                    }]
+                },
+                canPrint: true
+            })
+        ]
     },
     plugins: [
         new VueLoaderPlugin(),
@@ -90,18 +117,15 @@ module.exports = {
         }),
         new HappyPack({
             id: 'css',
-            loaders: [{
-                loader: 'css-loader',
-                // options: {
-                //     minimize: true
-                // }
-            }, 'postcss-loader'],
+            loaders: ['css-loader', 'postcss-loader'],
             threadPool: happyThreadPool
         }),
         new webpack.DllReferencePlugin({
             context: __dirname,
             manifest: require('./dist/vendors-manifest.json')
         }),
-        new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns:['**/*', '!vendors*']})
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: ['**/*', '!vendors*']
+        })
     ]
 }
