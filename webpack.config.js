@@ -41,7 +41,7 @@ module.exports = {
                 }
             }]
         }, {
-            test: /\.js$/,
+            test: /\.jsx?$/,
             exclude: node_modules_dir,
             use: 'happypack/loader?id=babel'
         }, {
@@ -49,10 +49,14 @@ module.exports = {
             exclude: node_modules_dir,
             loader: 'vue-style-loader!css-loader!postcss-loader'
         }, {
-            test: /\.jpe?g$|\.gif$|\.png$|\.mp3$/,
+            test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.mp3$/,
             exclude: node_modules_dir,
             loader: 'file-loader'
         }]
+    },
+    devServer: {
+        host: '127.0.0.1',
+        port: 8088
     },
     plugins: [
         new VueLoaderPlugin(),

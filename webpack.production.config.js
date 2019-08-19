@@ -47,7 +47,7 @@ module.exports = {
                 }
             }]
         }, {
-            test: /\.js$/,
+            test: /\.jsx?$/,
             exclude: node_modules_dir,
             use: 'happypack/loader?id=babel'
         }, {
@@ -58,7 +58,7 @@ module.exports = {
                 use: 'happypack/loader?id=css'
             })
         }, {
-            test: /\.jpe?g$|\.gif$|\.png$|\.mp3$/,
+            test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.mp3$/,
             exclude: node_modules_dir,
             loader: 'file-loader'
         }]
@@ -117,7 +117,12 @@ module.exports = {
         }),
         new HappyPack({
             id: 'css',
-            loaders: ['css-loader', 'postcss-loader'],
+            loaders: [{
+                loader: 'css-loader',
+                options: {
+                    importLoaders: 1
+                }
+            }, 'postcss-loader'],
             threadPool: happyThreadPool
         }),
         new webpack.DllReferencePlugin({

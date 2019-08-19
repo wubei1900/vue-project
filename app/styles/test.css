@@ -2,4 +2,9 @@
     color: var(--color-black);
     display: flex;
     flex: 1;
+    background: url(~@static/sprites/1.png);
+}
+
+.test3 {
+    background: url(~@static/sprites/2.png);
 }
