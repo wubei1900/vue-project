@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style>
-@import "~@styles/test.css";
+@import "@styles/test.css";
 
 .test2 {
   transform: translate(0px, 0px);

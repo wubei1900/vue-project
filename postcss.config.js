@@ -1,7 +1,9 @@
 const path = require('path');
 const postcss = require('postcss');
-var updateRule = require('postcss-sprites/lib/core').updateRule;
-var revHash = require('rev-hash');
+const updateRule = require('postcss-sprites/lib/core').updateRule;
+const revHash = require('rev-hash');
+
+const spritePath = process.env.NODE_ENV === 'development' ? './build/' : './dist/';
 
 module.exports = {
     plugins: {
@@ -15,12 +17,13 @@ module.exports = {
             }
         },
 		'postcss-url': {
-			url: (asset) => {
-				const { url } = asset;
-				if (/\~@/.test(url)) {
-					return url.replace(/\~@/, '/app/');
-				}
-				return url;
+			url: function (asset) {
+                const { url } = asset;
+                const match = url.match(/^\~\@(.*)/);
+                if (match) {
+                    return path.join(__dirname, 'app/', match[1]);
+                }
+                return url;
 			}
 		},
         'postcss-preset-env': {
@@ -34,9 +37,9 @@ module.exports = {
                 padding: 5
             },
             basePath: './',
-            spritePath: './dist/',
+            spritePath,
             filterBy: function (image) {
-                if (/static(\/|\\)sprites/.test(image.url)) {
+                if (/static\\sprites/.test(image.url)) {
                     return Promise.resolve();
                 }
                 return Promise.reject();

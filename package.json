@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "webpack-dev-server --hot --inline --mode development --open --progress --profile --color",
-    "dll": "webpack -p --config webpack.dll.config.js --mode development --progress --profile --color",
-    "pro": "webpack -p --config webpack.production.config.js --mode production --progress --profile --color"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --mode development --open --progress --profile --color",
+    "dll": "cross-env NODE_ENV=production webpack -p --config webpack.dll.config.js --mode development --progress --profile --color",
+    "pro": "cross-env NODE_ENV=production webpack -p --config webpack.production.config.js --mode production --progress --profile --color"
   },
   "dependencies": {
     "vue": "^2.6.10"
@@ -19,6 +19,7 @@
     "add-asset-html-webpack-plugin": "^3.1.3",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",

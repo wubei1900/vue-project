@@ -1,10 +1,10 @@
 const os = require('os');
 const path = require('path');
-const webpack = require('webpack');
 const HappyPack = require('happypack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const node_modules_dir = path.resolve(__dirname, 'node_modules');
 
@@ -79,9 +79,8 @@ module.exports = {
             }],
             threadPool: happyThreadPool
         }),
-        new webpack.DllReferencePlugin({
-            context: __dirname,
-            manifest: require('./build/vendors-manifest.json')
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: ['**/*']
         })
     ]
 }
