@@ -7,7 +7,7 @@ const spritePath = process.env.NODE_ENV === 'development' ? './build/' : './dist
 
 module.exports = {
     plugins: {
-		'postcss-import': {
+        'postcss-import': {
             resolve: function (id) {
                 const match = id.match(/^\~?\@styles\/(.*)/);
                 if (match) {
@@ -16,16 +16,16 @@ module.exports = {
                 return id;
             }
         },
-		'postcss-url': {
-			url: function (asset) {
+        'postcss-url': {
+            url: function (asset) {
                 const { url } = asset;
                 const match = url.match(/^\~\@(.*)/);
                 if (match) {
                     return path.join(__dirname, 'app/', match[1]);
                 }
                 return url;
-			}
-		},
+            }
+        },
         'postcss-preset-env': {
             autoprefixer: {},
             importFrom: path.resolve(__dirname, 'app/styles/root.css'),
