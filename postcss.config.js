@@ -5,7 +5,7 @@ var revHash = require('rev-hash');
 
 module.exports = {
     plugins: {
-        'postcss-import': {
+		'postcss-import': {
             resolve: function (id) {
                 const match = id.match(/^\~?\@styles\/(.*)/);
                 if (match) {
@@ -14,13 +14,22 @@ module.exports = {
                 return id;
             }
         },
+		'postcss-url': {
+			url: (asset) => {
+				const { url } = asset;
+				if (/\~@/.test(url)) {
+					return url.replace(/\~@/, '/app/');
+				}
+				return url;
+			}
+		},
         'postcss-preset-env': {
             autoprefixer: {},
             importFrom: path.resolve(__dirname, 'app/styles/root.css'),
             preserve: false
         },
         'postcss-sprites': {
-            retina: true,
+            retina: false,
             spritesmith: {
                 padding: 5
             },
@@ -47,7 +56,7 @@ module.exports = {
                     });
                 },
                 onSaveSpritesheet: function (opts, spritesheet) {
-                    return join(
+                    return path.join(
                         opts.spritePath,
                         spritesheet.groups.concat([
                             revHash(spritesheet.image),
