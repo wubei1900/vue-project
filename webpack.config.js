@@ -3,8 +3,6 @@ const path = require('path');
 const HappyPack = require('happypack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const node_modules_dir = path.resolve(__dirname, 'node_modules');
 
@@ -65,10 +63,6 @@ module.exports = {
             template: path.resolve(__dirname, 'template.html'),
             inject: false
         }),
-        new AddAssetHtmlPlugin({
-            filepath: path.join(__dirname, 'build', '*.dll.js'),
-            includeSourcemap: false
-        }),
         new HappyPack({
             id: 'babel',
             loaders: [{
@@ -78,9 +72,6 @@ module.exports = {
                 }
             }],
             threadPool: happyThreadPool
-        }),
-        new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['**/*']
         })
     ]
 }

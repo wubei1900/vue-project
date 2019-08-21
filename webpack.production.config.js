@@ -99,7 +99,10 @@ module.exports = {
             template: path.resolve(__dirname, 'template.html'),
             inject: false,
             hash: true,
-            minify: true
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
         }),
         new AddAssetHtmlPlugin([{
             filepath: path.join(__dirname, 'dist', '*.dll.js'),
