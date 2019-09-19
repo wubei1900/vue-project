@@ -95,6 +95,7 @@ module.exports = {
         new VueLoaderPlugin(),
         new ExtractTextPlugin("styles.css"),
         new HtmlWebpackPlugin({
+            title: 'vueProject',
             filename: 'index.html',
             template: path.resolve(__dirname, 'template.html'),
             inject: false,

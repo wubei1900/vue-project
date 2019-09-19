@@ -59,6 +59,7 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
+            title: 'vueProject',
             filename: 'index.html',
             template: path.resolve(__dirname, 'template.html'),
             inject: false
