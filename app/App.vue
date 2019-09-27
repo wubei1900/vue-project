@@ -1,23 +1,14 @@
 <template>
   <div id="app">
-    <div class="test test2">{{msg}}</div>
-    <div class="test3"></div>
+    <test/>
   </div>
 </template>
 
 <script>
+import Test from '@components/Test.vue';
 export default {
-  data() {
-    return { msg: "hello world" };
+  components: {
+    Test
   }
-};
-</script>
-
-<style>
-@import "@styles/test.css";
-
-.test2 {
-  transform: translate(0px, 0px);
-  font-size: 16px;
 }
-</style>
+</script>

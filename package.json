@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --mode development --open --progress --profile --color",
     "dll": "cross-env NODE_ENV=production webpack -p --config webpack.dll.config.js --mode development --progress --profile --color",
-    "pro": "cross-env NODE_ENV=production webpack -p --config webpack.production.config.js --mode production --progress --profile --color"
+    "deploy": "cross-env NODE_ENV=production webpack -p --config webpack.production.config.js --mode production --progress --profile --color"
   },
   "dependencies": {
     "vue": "^2.6.10"
